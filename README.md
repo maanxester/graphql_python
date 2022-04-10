@@ -19,3 +19,12 @@ Necessário instalar as bibliotecas com o arquivo  **requirements.txt**:
 $ pip install -r requirements.txt
 ```
 
+Neste lab, é utilizado a lib Strawberry para utilizarmos o GraphQL. \
+Para rodarmos o servidor do Strawberry, basta inserir o seguinte comando no console:
+
+```shell
+$ strawberry server nome_do_arquivo
+```
+Exemplo: \
+![Screenshot](graphql.png)
+
