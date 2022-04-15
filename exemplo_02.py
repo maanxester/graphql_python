@@ -26,6 +26,17 @@ class Person(SQLModel, table=True):
 SQLModel.metadata.create_all(engine)
 
 
+def create_app(idade: int, nome: str):
+    person = Person(nome=nome, idade=idade)
+
+    with Session(engine) as session:
+        session.add(person)
+        session.commit()
+        session.refresh(person)
+
+    return person
+
+
 @strawberry.type
 class Pessoa:
     id: Optional[int]
@@ -43,5 +54,17 @@ class Query:
         return result
 
 
-schema = strawberry.Schema(query=Query)
+@strawberry.type
+class Mutation:
+    create_pessoa: Pessoa = strawberry.field(resolver=create_app)
+
+
+schema = strawberry.Schema(
+    query=Query,
+    mutation=Mutation
+    )
+
+# GET
+# http :8000/graphql query="{ allPessoa{ idade }}"
+
 
