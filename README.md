@@ -25,6 +25,10 @@ Para rodarmos o servidor do Strawberry, basta inserir o seguinte comando no cons
 ```shell
 $ strawberry server nome_do_arquivo
 ```
+Ou
+```shell
+$ uvicorn app.app:app --reload
+```
 Exemplo: \
 ![Screenshot](graphql.png)
 
