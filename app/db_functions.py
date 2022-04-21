@@ -1,5 +1,6 @@
 from sqlmodel import Session, select
-from .models import Pessoa, engine
+from sqlalchemy.orm import joinedload
+from .models import Pessoa, engine, Livro
 
 
 def create_pessoa(idade: int, nome: str):
@@ -18,3 +19,22 @@ def get_pessoas():
     with Session(engine) as session:
         result = session.execute(query).scalars().all()
     return result
+
+
+def get_livros():
+    query = select(Livro).options(joinedload('*'))
+    with Session(engine) as session:
+        result = session.execute(query).scalars().unique().all()
+
+    return result
+
+
+def create_livros(titulo: str, pessoa_id: int):
+    livro = Livro(titulo=titulo, pessoa_id=pessoa_id)
+
+    with Session(engine) as session:
+        session.add(livro)
+        session.commit()
+        session.refresh(livro)
+
+    return livro
